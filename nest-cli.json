@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/sportboo-microservices/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/sportboo-microservices/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/sportboo-microservices",
+  "projects": {
+    "chat-service": {
+      "type": "application",
+      "root": "apps/chat-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/chat-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/chat-service/tsconfig.app.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "database": {
+      "type": "library",
+      "root": "libs/database",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
+      }
+    },
+    "file-storage-service": {
+      "type": "application",
+      "root": "apps/file-storage-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/file-storage-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/file-storage-service/tsconfig.app.json"
+      }
+    },
+    "iam-service": {
+      "type": "application",
+      "root": "apps/iam-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/iam-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/iam-service/tsconfig.app.json"
+      }
+    },
+    "notification-service": {
+      "type": "application",
+      "root": "apps/notification-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification-service/tsconfig.app.json"
+      }
+    },
+    "p2p-betting-service": {
+      "type": "application",
+      "root": "apps/p2p-betting-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/p2p-betting-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/p2p-betting-service/tsconfig.app.json"
+      }
+    },
+    "sportboo-microservices": {
+      "type": "application",
+      "root": "apps/sportboo-microservices",
+      "entryFile": "main",
+      "sourceRoot": "apps/sportboo-microservices/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sportboo-microservices/tsconfig.app.json"
+      }
+    },
+    "sports-data-service": {
+      "type": "application",
+      "root": "apps/sports-data-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/sports-data-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sports-data-service/tsconfig.app.json"
+      }
+    },
+    "sports-sync-service": {
+      "type": "application",
+      "root": "apps/sports-sync-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/sports-sync-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sports-sync-service/tsconfig.app.json"
+      }
+    },
+    "testing": {
+      "type": "library",
+      "root": "libs/testing",
+      "entryFile": "index",
+      "sourceRoot": "libs/testing/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/testing/tsconfig.lib.json"
+      }
+    },
+    "user-service": {
+      "type": "application",
+      "root": "apps/user-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-service/tsconfig.app.json"
+      }
+    },
+    "wallet-service": {
+      "type": "application",
+      "root": "apps/wallet-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/wallet-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/wallet-service/tsconfig.app.json"
+      }
+    }
+  }
+}
