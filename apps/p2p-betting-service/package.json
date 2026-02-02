@@ -1,0 +1,13 @@
+{
+  "name": "p2p-betting-service",
+  "version": "1.0.0",
+  "description": "sportboo p2p-betting service server",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^7.3.0"
+  },
+  "devDependencies": {
+    "prisma": "^7.3.0"
+  }
+}
