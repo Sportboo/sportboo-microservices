@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class WalletServiceService {
-  getHello(): string {
-    return 'Hello World!';
+  getRootPage(): string {
+    return `Sportboo Wallet Service is running on port: ${process.env.PORT}`;
   }
 }

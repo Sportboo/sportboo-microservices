@@ -6,7 +6,7 @@ export class WalletServiceController {
   constructor(private readonly walletServiceService: WalletServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.walletServiceService.getHello();
+  getRootPage(): string {
+    return this.walletServiceService.getRootPage();
   }
 }
