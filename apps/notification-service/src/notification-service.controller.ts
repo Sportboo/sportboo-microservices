@@ -6,7 +6,7 @@ export class NotificationServiceController {
   constructor(private readonly notificationServiceService: NotificationServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.notificationServiceService.getHello();
+  getRootPage(): string {
+    return this.notificationServiceService.getRootPage();
   }
 }
