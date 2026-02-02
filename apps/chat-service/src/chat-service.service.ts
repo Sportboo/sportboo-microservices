@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ChatServiceService {
-  getHello(): string {
-    return 'Hello World!';
+  getRootPage(): string {
+    return `Sportboo Chat Service is running on port: ${process.env.PORT}`;
   }
 }

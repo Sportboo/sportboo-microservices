@@ -6,7 +6,7 @@ export class ChatServiceController {
   constructor(private readonly chatServiceService: ChatServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.chatServiceService.getHello();
-  }
+    getRootPage(): string {
+      return this.chatServiceService.getRootPage();
+    }
 }
