@@ -6,7 +6,7 @@ export class SportsSyncServiceController {
   constructor(private readonly sportsSyncServiceService: SportsSyncServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.sportsSyncServiceService.getHello();
+  getRootPage(): string {
+    return this.sportsSyncServiceService.getRootPage();
   }
 }
