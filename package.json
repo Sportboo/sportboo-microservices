@@ -20,11 +20,27 @@
     "test:e2e": "jest --config ./apps/sportboo-microservices/test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.1",
-    "@nestjs/core": "^11.0.1",
-    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/axios": "^4.0.1",
+    "@nestjs/common": "^11.1.12",
+    "@nestjs/core": "^11.1.12",
+    "@nestjs/microservices": "^11.1.12",
+    "@nestjs/platform-express": "^11.1.12",
+    "@nestjs/swagger": "^11.2.5",
+    "@nestjs/terminus": "^11.0.0",
+    "amqp-connection-manager": "^5.0.0",
+    "amqplib": "^0.10.9",
+    "axios": "^1.13.4",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
+    "grpc-health-check": "^2.1.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.0",
+    "@nestjs/bullmq": "^11.0.4",
+    "@nestjs/cache-manager": "^3.1.0",
+    "bullmq": "^5.67.2",
+    "cache-manager": "^7.2.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -32,10 +48,12 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@types/amqplib": "^0",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
+    "concurrently": "^9.2.1",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
@@ -76,5 +94,9 @@
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
       "^@app/testing(|/.*)$": "<rootDir>/libs/testing/src/$1"
     }
-  }
+  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ]
 }
