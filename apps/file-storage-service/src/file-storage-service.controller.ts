@@ -6,7 +6,7 @@ export class FileStorageServiceController {
   constructor(private readonly fileStorageServiceService: FileStorageServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.fileStorageServiceService.getHello();
+  getRootPage(): string {
+    return this.fileStorageServiceService.getRootPage();
   }
 }
