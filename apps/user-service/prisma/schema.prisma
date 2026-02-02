@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider   = "prisma-client"
+  output     = "../generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// generator json {
+//   provider  = "prisma-json-types-generator"
+//    output   = "../generated/prisma"
+//   namespace = "PrismaJson"
+//   allowAny  = false
+// }
+
+model User {
+  id                    Int               @id @default(autoincrement())
+  fullname              String
+  username              String?           @unique
+  email                 String            @unique
+  sportbooId            String            @unique
+  pin                   String?
+  phone                 String?
+  profileImgUrl         String?
+  emailVerified         Boolean           @default(false)
+  phoneVerified         Boolean           @default(false)
+  kycVerified           Boolean           @default(false)
+  addressVerified       Boolean           @default(false)
+  inSyncWithChat        Boolean           @default(false)
+  goat                  Int?
+  accountStatus         UserAccountStatus @default(unverified)
+  authAppId             String?
+  deviceId              String?
+  timeOut               DateTime?
+  timeOutHms            String?
+  residentialAddress    Json?
+  preferences           Json?
+  externalCommunication Json?
+  inAppCommunication    Json?
+  securityPreferences   Json?
+  walletActivities      Json?
+  securityAlerts        Json?
+  betUpdates            Json?
+  bookieAlerts          Json?
+  productUpdates        Json?
+  accountVerification   Json?
+  reward                Json?
+  depositLimit          Json?
+  accountDailyLimit     Json?
+  playerFavorites       Int[]
+  competitionFavorites  Int[]
+  matchFavorites        Int[]
+  teamFavorites         Int[]
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+}
+
+enum UserAccountStatus {
+  verified
+  unverified
+  pending
+}
