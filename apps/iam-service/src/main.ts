@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NestFactory } from '@nestjs/core';
 import { IamServiceModule } from './iam-service.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { Logger } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import {
   DocumentBuilder,
   SwaggerCustomOptions,
@@ -9,10 +11,38 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import { CustomValidationPipe } from '@app/common/pipes';
-import { AllExceptionsFilter, HttpExceptionFilter, PrismaClientExceptionFilter, PrismaClientValidationExceptionFilter } from '@app/common';
+import {
+  AllExceptionsFilter,
+  HttpExceptionFilter,
+  PrismaClientExceptionFilter,
+  PrismaClientValidationExceptionFilter,
+} from '@app/common';
+import { ConfigService } from '@nestjs/config';
+
+function configureSwagger(app: INestApplication): void {
+  const config = new DocumentBuilder()
+    .setTitle('Sportboo IAM API')
+    .setDescription('API for Sportboo IAM Service')
+    .setVersion('1.0')
+    // .addTag('TODO:')
+    .addBearerAuth()
+    .build();
+
+  const documentOptions: SwaggerDocumentOptions = {
+    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
+  };
+  const document = SwaggerModule.createDocument(app, config, documentOptions);
+
+  const setupOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+    customSiteTitle: 'Vibbly API Documentation',
+  };
+  SwaggerModule.setup('api/docs', app, document, setupOptions);
+}
 
 async function bootstrap() {
-  
   (BigInt.prototype as any).toJSON = function () {
     return Number(this);
   };
@@ -39,27 +69,14 @@ async function bootstrap() {
   app.useGlobalPipes(new CustomValidationPipe());
 
   // Swagger setup
-  const config = new DocumentBuilder()
-    .setTitle('Sportboo IAM API')
-    .setDescription('API for Sportboo IAM Service')
-    .setVersion('1.0')
-    // .addTag('TODO:')
-    .addBearerAuth()
-    .build();
+  configureSwagger(app);
 
-  const documentOptions: SwaggerDocumentOptions = {
-    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
-  };
-  const document = SwaggerModule.createDocument(app, config, documentOptions);
-
-  const setupOptions: SwaggerCustomOptions = {};
-  SwaggerModule.setup('api/docs', app, document, setupOptions);
-
-    // Set up logger
+  // Set up logger
   const logger = new Logger('Bootstrap');
 
   // App port
-  const port = process.env.PORT ?? 3001;
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT') ?? 3001;
 
   // Start microservice
   await app.startAllMicroservices();
