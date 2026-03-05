@@ -24,7 +24,6 @@ function configureSwagger(app: INestApplication): void {
     .setTitle('Sportboo IAM API')
     .setDescription('API for Sportboo IAM Service')
     .setVersion('1.0')
-    // .addTag('TODO:')
     .addBearerAuth()
     .build();
 
@@ -37,7 +36,7 @@ function configureSwagger(app: INestApplication): void {
     swaggerOptions: {
       persistAuthorization: true,
     },
-    customSiteTitle: 'Vibbly API Documentation',
+    customSiteTitle: 'Sportboo API Documentation',
   };
   SwaggerModule.setup('api/docs', app, document, setupOptions);
 }
@@ -54,7 +53,7 @@ async function bootstrap() {
     },
   );
 
-  // Enable CORS (optional based on your frontend setup)
+  // Enable CORS
   app.enableCors();
 
   // Register global filters

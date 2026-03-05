@@ -1,16 +1,47 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NestFactory } from '@nestjs/core';
 import { SportsSyncServiceModule } from './sports-sync-service.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ValidationPipe, Logger } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import {
   DocumentBuilder,
   SwaggerCustomOptions,
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
+import { CustomValidationPipe } from '@app/common/pipes';
+import {
+  AllExceptionsFilter,
+  HttpExceptionFilter,
+  PrismaClientExceptionFilter,
+  PrismaClientValidationExceptionFilter,
+} from '@app/common';
+import { ConfigService } from '@nestjs/config';
+
+function configureSwagger(app: INestApplication): void {
+  const config = new DocumentBuilder()
+    .setTitle('Sportboo Sports Sync API')
+    .setDescription('API for Sportboo Sports Sync Service')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const documentOptions: SwaggerDocumentOptions = {
+    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
+  };
+  const document = SwaggerModule.createDocument(app, config, documentOptions);
+
+  const setupOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+    customSiteTitle: 'Sportboo API Documentation',
+  };
+  SwaggerModule.setup('api/docs', app, document, setupOptions);
+}
 
 async function bootstrap() {
-  
   (BigInt.prototype as any).toJSON = function () {
     return Number(this);
   };
@@ -22,40 +53,29 @@ async function bootstrap() {
     },
   );
 
-  // Enable CORS (optional based on your frontend setup)
+  // Enable CORS
   app.enableCors();
 
-  // Global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true, // strips unrecognized properties
-      forbidNonWhitelisted: true, // throws error on extra props
-      transform: true, // automatically transforms payloads to DTO instances
-    }),
+  // Register global filters
+  app.useGlobalFilters(
+    new AllExceptionsFilter(),
+    new HttpExceptionFilter(),
+    new PrismaClientExceptionFilter(),
+    new PrismaClientValidationExceptionFilter(),
   );
 
+  // Register global pipes
+  app.useGlobalPipes(new CustomValidationPipe());
+
   // Swagger setup
-  const config = new DocumentBuilder()
-    .setTitle('Sportboo Sports Sync API')
-    .setDescription('API for Sportboo Sports Sync Service')
-    .setVersion('1.0')
-    // .addTag('Patient Email Sign Up Endpoints')
-    .addBearerAuth()
-    .build();
+  configureSwagger(app);
 
-  const documentOptions: SwaggerDocumentOptions = {
-    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
-  };
-  const document = SwaggerModule.createDocument(app, config, documentOptions);
-
-  const setupOptions: SwaggerCustomOptions = {};
-  SwaggerModule.setup('api/docs', app, document, setupOptions);
-
-    // Set up logger
+  // Set up logger
   const logger = new Logger('Bootstrap');
 
   // App port
-  const port = process.env.PORT ?? 3006;
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT') ?? 3006;
 
   // Start microservice
   await app.startAllMicroservices();
