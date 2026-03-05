@@ -1,13 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { IamServiceModule } from './iam-service.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ValidationPipe, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import {
   DocumentBuilder,
   SwaggerCustomOptions,
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
+import { CustomValidationPipe } from '@app/common/pipes';
+import { AllExceptionsFilter, HttpExceptionFilter, PrismaClientExceptionFilter, PrismaClientValidationExceptionFilter } from '@app/common';
 
 async function bootstrap() {
   
@@ -25,21 +27,23 @@ async function bootstrap() {
   // Enable CORS (optional based on your frontend setup)
   app.enableCors();
 
-  // Global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true, // strips unrecognized properties
-      forbidNonWhitelisted: true, // throws error on extra props
-      transform: true, // automatically transforms payloads to DTO instances
-    }),
+  // Register global filters
+  app.useGlobalFilters(
+    new AllExceptionsFilter(),
+    new HttpExceptionFilter(),
+    new PrismaClientExceptionFilter(),
+    new PrismaClientValidationExceptionFilter(),
   );
+
+  // Register global pipes
+  app.useGlobalPipes(new CustomValidationPipe());
 
   // Swagger setup
   const config = new DocumentBuilder()
     .setTitle('Sportboo IAM API')
     .setDescription('API for Sportboo IAM Service')
     .setVersion('1.0')
-    // .addTag('Patient Email Sign Up Endpoints')
+    // .addTag('TODO:')
     .addBearerAuth()
     .build();
 

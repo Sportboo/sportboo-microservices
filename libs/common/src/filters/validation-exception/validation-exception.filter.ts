@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { ExceptionResponse } from '@app/common';
 import {
   ExceptionFilter,
   Catch,
@@ -5,7 +7,6 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { ExceptionResponse } from '../responses/exception.response';
 
 @Catch(BadRequestException)
 export class ValidationExceptionFilter implements ExceptionFilter {
