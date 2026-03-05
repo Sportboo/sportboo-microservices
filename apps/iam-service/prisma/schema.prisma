@@ -25,7 +25,7 @@ model IamUser {
   id                      Int                      @id @default(autoincrement())
   email                   String                   @unique
   passwordHash            String?
-  role                    Role
+  role                    IamRole
   authMethod              AuthMethod               @default(email)
   accountStatus           AccountStatus            @default(active)
   createdAt               DateTime                 @default(now())
@@ -33,6 +33,7 @@ model IamUser {
   passwordHistory         PasswordHistory[]
   passwordResetTokens     PasswordResetToken[]
   emailVerificationTokens EmailVerificationToken[]
+  phoneVerificationTokens PhoneVerificationToken[]
   passwordChangeToken     PasswordChangeToken[]
 
   @@unique([email, role])
@@ -87,7 +88,19 @@ model EmailVerificationToken {
   @@index([iamUserId])
 }
 
-enum Role {
+model PhoneVerificationToken {
+  id        Int      @id @default(autoincrement())
+  iamUserId Int
+  token     String   @unique
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  iamUser   IamUser  @relation(fields: [iamUserId], references: [id], onDelete: Cascade)
+
+  @@index([iamUserId])
+}
+
+enum IamRole {
   user
   admin
   super_admin

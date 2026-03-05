@@ -1,0 +1,80 @@
+model UserProfile {
+  id                    Int           @id @default(autoincrement()) @map("id")
+  fullname              String        @map("fullname")
+  username              String?       @unique @map("username")
+  email                 String        @unique @map("email")
+  sportbooId            String        @unique @map("sportboo_id")
+  pin                   String?       @map("pin")
+  phone                 String?       @map("phone")
+  profileImgUrl         String?       @map("profile_img_url")
+  emailVerified         Boolean       @default(false) @map("email_verified")
+  phoneVerified         Boolean       @default(false) @map("phone_verified")
+  kycVerified           Boolean       @default(false) @map("kyc_verified")
+  addressVerified       Boolean       @default(false) @map("address_verified")
+  inSyncWithChat        Boolean       @default(false) @map("in_sync_with_chat")
+  goat                  Int?          @map("goat")
+  role                  UserRole      @map("role")
+  authMethod            AuthMethod    @default(email) @map("auth_method")
+  accountStatus         AccountStatus @default(active) @map("account_status")
+  deviceId              String?       @map("device_id")
+  deviceIds             String[]      @map("device_ids")
+  timeOut               DateTime?     @map("time_out")
+  timeOutHms            String?       @map("time_out_hms")
+  /// [ResidentialAddress]
+  residentialAddress    Json?         @map("residential_address")
+  /// [BusinessAddress]
+  businessAddress       Json?         @map("business_address")
+  preferences           Json?         @map("preferences")
+  ///
+  externalCommunication Json?         @map("external_communication")
+  ///
+  inAppCommunication    Json?         @map("in_app_communication")
+  securityPreferences   Json?         @map("security_preferences")
+  walletActivities      Json?         @map("wallet_activities")
+  securityAlerts        Json?         @map("security_alerts")
+  ///
+  betUpdates            Json?         @map("bet_updates")
+  bookieAlerts          Json?         @map("bookie_alerts")
+  ///
+  productUpdates        Json?         @map("production_verification")
+  accountVerification   Json?         @map("account_verification")
+  reward                Json?         @map("reward")
+  depositLimit          Json?         @map("deposit_limit")
+  accountDailyLimit     Json?         @map("account_daily_limit")
+  playerFavorites       Int[]         @map("player_favorites")
+  competitionFavorites  Int[]         @map("competition_favorites")
+  matchFavorites        Int[]         @map("match_favorites")
+  teamFavorites         Int[]         @map("team_favorites")
+  createdAt             DateTime      @default(now()) @map("created_at")
+  updatedAt             DateTime      @updatedAt @map("updated_at")
+
+  @@map("user_profiles")
+  @@schema("user")
+}
+
+enum UserRole {
+  user
+  admin
+  super_admin
+
+  @@schema("user")
+}
+
+enum AuthMethod {
+  email
+  google
+  facebook
+  apple
+  anonymous
+
+  @@schema("user")
+}
+
+enum AccountStatus {
+  active
+  inactive
+  suspended
+  deleted
+
+  @@schema("user")
+}

@@ -17,7 +17,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/sportboo-microservices/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/sportboo-microservices/test/jest-e2e.json",
+    "generate:iam": "yarn workspace iam-service prisma generate",
+    "generate:user": "yarn workspace user-service prisma generate",
+    "generate:all": "yarn workspaces foreach -p run prisma generate"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.3",
@@ -38,6 +41,9 @@
     "amqplib": "^0.10.9",
     "axios": "^1.13.4",
     "bullmq": "^5.67.2",
+    "pg": "^8.16.3",
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.4.1",
     "cache-manager": "^7.2.8",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.3",
@@ -49,13 +55,15 @@
     "pino-http": "^11.0.0",
     "pino-pretty": "^13.1.2",
     "socket.io": "^4.8.1"
-
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
+    "@types/pg": "^8.16.0",
+    "prisma": "^7.4.1",
+    "prisma-json-types-generator": "^4.0.0-beta.2",
     "@nestjs/testing": "^11.0.1",
     "@types/amqplib": "^0",
     "@types/express": "^5.0.0",

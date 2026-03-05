@@ -8,11 +8,11 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { HashingService } from '../common/services/hashing/hashing.service';
+import { HashingService } from '../src/common/services/hashing/hashing.service';
 import { JwtService } from '@nestjs/jwt';
-import { HelperService } from '../common/services/helper/helper.service';
-import { PrismaService } from '../common/services/prisma/prisma.service';
-import jwtConfig from '../common/config/jwt.config';
+import { HelperService } from '../src/common/services/helper/helper.service';
+import { PrismaService } from '../src/common/services/prisma/prisma.service';
+import jwtConfig from '../src/common/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ActiveUserData } from '@app/common';
