@@ -25,9 +25,12 @@ model IamUser {
   id                      Int                      @id @default(autoincrement())
   email                   String                   @unique
   passwordHash            String?
+  username                String @unique
   role                    IamRole
   authMethod              AuthMethod               @default(email)
   accountStatus           AccountStatus            @default(active)
+  emailVerified         Boolean       @default(false) @map("email_verified")
+  phoneVerified         Boolean       @default(false) @map("phone_verified")
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime                 @updatedAt
   passwordHistory         PasswordHistory[]
@@ -119,4 +122,18 @@ enum AccountStatus {
   inactive
   suspended
   deleted
+}
+
+
+
+// Temp models
+model Otp {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  type      String
+  value     String
+  verified  Boolean?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

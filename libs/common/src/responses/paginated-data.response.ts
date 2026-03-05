@@ -1,4 +1,4 @@
-import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class Pagination {
   @ApiProperty({
@@ -31,7 +31,7 @@ export abstract class PaginatedDataResponse<T> {
   })
   readonly message: string;
 
-  readonly data: T;
+  readonly data: T[];
 
   @ApiProperty({
     description: 'Pagination information',
